@@ -1,0 +1,9 @@
+LIBRARY WTDBGKR
+
+EXPORTS
+	kr_exec      @1
+	kr_sbrk      @2
+
+
+
+	kr_errif     @90
