@@ -5,7 +5,7 @@
 #endif // _DEBUG
 
 #include <krcommon.h>
-#include <krdata.h>
+#include <krinfo.h>
 
 #include <Windows.h>
 

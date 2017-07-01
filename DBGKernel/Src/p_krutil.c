@@ -1,6 +1,6 @@
 #include <krutil.h>
 #include <krerror.h>
-#include <krdata.h>
+#include <krinfo.h>
 
 #include <setjmp.h>
 #include <psapi.h>
@@ -26,12 +26,12 @@ wtint32_t kr_getModuleNameSub(wtwchar *szNtName, wtwchar *szName, wtuint32_t nSi
                 } else {
                         nRet = kr_errno = GetLastError();
                         if (kr_errno == ERROR_INSUFFICIENT_BUFFER) {
-                                nRet = kr_errno = KR_MEMORY_SMALL_ERROR;
+                                nRet = kr_errno = WT_MEMORY_SMALL_ERROR;
                         } else if (kr_errno = ERROR_FILE_NOT_FOUND) {
                                 nRet = kr_errno = 0;
                                 continue;
                         } else {
-                                nRet = KR_NOT_EXPECT_ERROR;
+                                nRet = WT_NOT_EXPECT_ERROR;
                         }
                         return nRet;
                 }
@@ -48,7 +48,7 @@ wtint32_t kr_getModuleName(wtpvoid pFile, wtwchar *szName, wtuint32_t nSize) {
 
         // param check
         if (pFile == NULL || szName == NULL || nSize == 0) {
-                nRet = kr_errno = KR_PARAM_ERROR;
+                nRet = kr_errno = WT_PARAM_ERROR;
                 return nRet;
         }
 
@@ -56,7 +56,7 @@ wtint32_t kr_getModuleName(wtpvoid pFile, wtwchar *szName, wtuint32_t nSize) {
         
         // get mapped file name
         if (!GetMappedFileNameW(GetCurrentProcess(), pFile, szBufferNtName, _MAX_PATH * 2)) {
-                nRet = KR_NOT_EXPECT_ERROR;
+                nRet = WT_NOT_EXPECT_ERROR;
                 kr_errno = GetLastError();
                 return nRet;
         }
@@ -75,22 +75,22 @@ wtint32_t kr_analyzeFile(wtpvoid pFile, krModuleInfo *pModule) {
 
         // check MZ flag
         if (pDosHeader->e_magic != IMAGE_DOS_SIGNATURE) {
-                longjmp(kr_util_jmppoint, KR_INVAILD_PEFILE);
+                longjmp(kr_util_jmppoint, WT_INVAILD_PEFILE);
         }
         
         pNtHeaders = (wtvoid *)((wtchar *)pFile + pDosHeader->e_lfanew);
 
         // check PE00 flag
         if (pNtHeaders->Signature != IMAGE_NT_SIGNATURE) {
-                longjmp(kr_util_jmppoint, KR_INVAILD_PEFILE);
+                longjmp(kr_util_jmppoint, WT_INVAILD_PEFILE);
         }
         
         // check machine
         if (pNtHeaders->FileHeader.Machine != IMAGE_FILE_MACHINE_I386) {
-                longjmp(kr_util_jmppoint, KR_INVAILD_PEFILE);
+                longjmp(kr_util_jmppoint, WT_INVAILD_PEFILE);
         }
 
-        pModule->m_imageInfo.m_endRVA = pModule->m_imageInfo.m_startRVA
+        pModule->m_imageInfo.m_endVA = (wtchar *)pModule->m_imageInfo.m_startVA
                                                 + pNtHeaders->OptionalHeader.SizeOfImage;
         
         for (wtuint32_t i = 0 ; i < pNtHeaders->FileHeader.NumberOfSections; i++) {
@@ -101,7 +101,7 @@ wtint32_t kr_analyzeFile(wtpvoid pFile, krModuleInfo *pModule) {
         return 0;
 }
 
-wtint32_t kr_analyzeModule(HANDLE hFile, wtuint_t nBase) {
+wtint32_t kr_analyzeModule(HANDLE hFile, wtpvoid nBase) {
         
         HANDLE    hMap  = NULL;
         wtpvoid   pFile = NULL;
@@ -112,21 +112,21 @@ wtint32_t kr_analyzeModule(HANDLE hFile, wtuint_t nBase) {
         nRet = kr_errno = 0;
         // parm check
         if (hFile == INVALID_HANDLE_VALUE) {
-                nRet = kr_errno = KR_PARAM_ERROR;
+                nRet = kr_errno = WT_PARAM_ERROR;
                 goto l_ret;
         }
         
         // map file
         hMap = CreateFileMappingW(hFile, NULL, PAGE_READONLY, 0, 0, NULL);
         if (hMap == NULL) {
-                nRet = KR_NOT_EXPECT_ERROR;
+                nRet = WT_NOT_EXPECT_ERROR;
                 kr_errno = GetLastError();
                 goto l_ret;
         }
         
         pFile = MapViewOfFile(hMap, FILE_MAP_READ, 0, 0, 0);
         if (pFile == NULL) {
-                nRet = KR_NOT_EXPECT_ERROR;
+                nRet = WT_NOT_EXPECT_ERROR;
                 kr_errno = GetLastError();
                 goto l_ret;
         }

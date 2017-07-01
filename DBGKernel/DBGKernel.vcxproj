@@ -162,7 +162,7 @@
     <ClCompile Include="Src\krerror.c" />
     <ClCompile Include="Src\krexec.c" />
     <ClCompile Include="Src\krsbrk.c" />
-    <ClCompile Include="Src\p_krdata.c" />
+    <ClCompile Include="Src\p_krinfo.c" />
     <ClCompile Include="Src\p_krevent.c" />
     <ClCompile Include="Src\p_krutil.c" />
   </ItemGroup>
@@ -171,7 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\krcommon.h" />
-    <ClInclude Include="Inc\krdata.h" />
+    <ClInclude Include="Inc\krinfo.h" />
     <ClInclude Include="Inc\krerror.h" />
     <ClInclude Include="Inc\krevent.h" />
     <ClInclude Include="Inc\krutil.h" />

@@ -17,12 +17,12 @@ typedef struct _kr_execinfo_s {
 typedef struct _kr_sbrkinfo_s {
         wtuint16_t m_brktype;           // sbrk type
         union {
-                wtuint_t  m_addr;       // type addr
+                wtpvoid  m_addr;        // type addr
                 wtwchar *m_funcname;    // type func name
                 struct {
                         wtwchar   *m_filename;
                         wtuint32_t m_linenum;
-                }       *m_lineinfo;    // type line num
+                }        m_lineinfo;    // type line num
         };
 }krSbrkInfo;
 

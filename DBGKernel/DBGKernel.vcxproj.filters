@@ -21,9 +21,6 @@
     <ClCompile Include="Src\krerror.c">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Src\p_krdata.c">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Src\p_krevent.c">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -34,6 +31,9 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Src\krdllmain.c">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\p_krinfo.c">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,10 +47,13 @@
     <ClInclude Include="Inc\krevent.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\krdata.h">
+    <ClInclude Include="Inc\krutil.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\krutil.h">
+    <ClInclude Include="Inc\krinfo.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\krbrkp.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

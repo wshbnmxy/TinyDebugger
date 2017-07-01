@@ -1,6 +1,6 @@
 #include <krevent.h>
 #include <krerror.h>
-#include <krdata.h>
+#include <krinfo.h>
 #include <krutil.h>
 
 wtint32_t kr_event(event_cb handers[]) {
@@ -15,10 +15,10 @@ wtint32_t kr_event(event_cb handers[]) {
                 dwEventCode = debugEv.dwDebugEventCode;
                 
                 if (dwEventCode == EXCEPTION_DEBUG_EVENT - 1 || dwEventCode >= RIP_EVENT + 1) {
-                        kr_jmpWithError(kr_errno = KR_EVENT_UNKNOW);
+                        kr_jmpWithError(kr_errno = WT_EVENT_UNKNOW);
                 }
                 if (handers[dwEventCode] == NULL) {
-                        kr_jmpWithError(kr_errno = KR_EVENT_HANDLER_NOT_SET);
+                        kr_jmpWithError(kr_errno = WT_EVENT_HANDLER_NOT_SET);
                 }
 
                 if( !handers[dwEventCode](&debugEv.u, &dwContStatus)) {

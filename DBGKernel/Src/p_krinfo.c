@@ -1,4 +1,4 @@
-#include <krdata.h>
+#include <krinfo.h>
 #include <krerror.h>
 
 #include <string.h>
@@ -14,7 +14,7 @@ wtint32_t kr_initDebugInfo(wtwchar *exepath, PROCESS_INFORMATION info) {
 
         // param check
         if (exepath == NULL) {
-                kr_errno = KR_PARAM_ERROR;
+                kr_errno = WT_PARAM_ERROR;
                 goto l_ret;
         }
 
@@ -26,7 +26,7 @@ wtint32_t kr_initDebugInfo(wtwchar *exepath, PROCESS_INFORMATION info) {
         if (pKrDbgInfoG->m_exePath  == NULL ||
             pKrDbgInfoG->m_pProcess == NULL ||
             pKrDbgInfoG->m_pThreads == NULL) {
-                kr_errno = KR_MEMORY_ERROR;
+                kr_errno = WT_MEMORY_ERROR;
                 goto l_ret;
         }
         
@@ -90,7 +90,7 @@ wtint32_t kr_uninitDebugInfo() {
         return kr_errno;
 }
 
-wtpvoid kr_insertModuleInfo(wtwchar *modulepath, wtuint_t baseRVA) {
+wtpvoid kr_insertModuleInfo(wtwchar *modulepath, wtpvoid baseVA) {
 
         kr_errno = 0;
         krModuleInfo *pVisitor;
@@ -98,14 +98,14 @@ wtpvoid kr_insertModuleInfo(wtwchar *modulepath, wtuint_t baseRVA) {
 
         // param check
         if (modulepath == NULL) {
-                kr_errno = KR_PARAM_ERROR;
+                kr_errno = WT_PARAM_ERROR;
                 goto l_ret;
         }
 
         // malloc
         pModuleInfo = malloc(sizeof(krModuleInfo));
         if (pModuleInfo == NULL) {
-                kr_errno = KR_MEMORY_ERROR;
+                kr_errno = WT_MEMORY_ERROR;
                 goto l_ret;
         }
 
@@ -113,11 +113,11 @@ wtpvoid kr_insertModuleInfo(wtwchar *modulepath, wtuint_t baseRVA) {
         ZeroMemory(pModuleInfo, sizeof(krModuleInfo));
         pModuleInfo->m_modulePath = malloc(sizeof(wtwchar) * (wcslen(modulepath) + 1));
         if (pModuleInfo->m_modulePath == NULL) {
-                kr_errno = KR_MEMORY_ERROR;
+                kr_errno = WT_MEMORY_ERROR;
                 goto l_ret;
         }
         wcscpy(pModuleInfo->m_modulePath, modulepath);
-        pModuleInfo->m_imageInfo.m_startRVA = baseRVA;
+        pModuleInfo->m_imageInfo.m_startVA = baseVA;
         
         pModuleInfo->m_next = NULL;
 

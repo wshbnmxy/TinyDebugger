@@ -1,7 +1,7 @@
 #include <krcommon.h>
 #include <krerror.h>
 #include <krevent.h>
-#include <krdata.h>
+#include <krinfo.h>
 
 #include <string.h>
 #include <stdlib.h>
@@ -23,7 +23,7 @@ wtint32_t kr_exec(krExecInfo *pInfo) {
 
         // param check
         if (pInfo == NULL || pInfo->m_exepath == NULL) {
-                return nRet = kr_errno = KR_PARAM_ERROR;
+                return nRet = kr_errno = WT_PARAM_ERROR;
         }
 
         // set error jmp point
@@ -39,7 +39,7 @@ wtint32_t kr_exec(krExecInfo *pInfo) {
         }
         szCmdL = malloc(sizeof(wtwchar) * nCmd);
         if (szCmdL == NULL) {
-                return nRet = kr_errno = KR_MEMORY_ERROR;
+                return nRet = kr_errno = WT_MEMORY_ERROR;
         }
         if (pInfo->m_exeargs != NULL && wcslen(pInfo->m_exeargs)) {
                 _swprintf(szCmdL, L"\"%s\" %s", pInfo->m_exepath, pInfo->m_exeargs);
@@ -58,11 +58,11 @@ wtint32_t kr_exec(krExecInfo *pInfo) {
                 switch (kr_errno)
                 {
                 case ERROR_FILE_NOT_FOUND:
-                        nRet = kr_errno = KR_EXEFILE_NOT_FOUND;break;
+                        nRet = kr_errno = WT_EXEFILE_NOT_FOUND;break;
                 case ERROR_DIRECTORY:
-                        nRet = kr_errno = KR_EXEWF_NOT_FOUND;break;
+                        nRet = kr_errno = WT_EXEWF_NOT_FOUND;break;
                 default:
-                        nRet = KR_NOT_EXPECT_ERROR;break;
+                        nRet = WT_NOT_EXPECT_ERROR;break;
                 }
                 goto l_ret;
         }
