@@ -15,7 +15,7 @@ typedef struct _kr_execinfo_s {
 #define KR_SBRK_TYPE_LINENUM    3
 
 typedef struct _kr_sbrkinfo_s {
-        wtuint16_t *m_brktype;          // sbrk type
+        wtuint16_t m_brktype;           // sbrk type
         union {
                 wtuint_t  m_addr;       // type addr
                 wtwchar *m_funcname;    // type func name
