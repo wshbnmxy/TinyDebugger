@@ -7,7 +7,7 @@
 
 static jmp_buf kr_util_jmppoint;
 
-wtint32_t kr_getmodulename_sub(wtwchar *szNtName, wtwchar *szName, wtuint32_t nSize) {
+wtint32_t kr_getModuleNameSub(wtwchar *szNtName, wtwchar *szName, wtuint32_t nSize) {
 
         wtwchar    szBuffer[_MAX_PATH] = L" :";
         wtwchar    szNtBuffer[_MAX_PATH] = L"";
@@ -39,7 +39,7 @@ wtint32_t kr_getmodulename_sub(wtwchar *szNtName, wtwchar *szName, wtuint32_t nS
         return nRet;
 }
 
-wtint32_t kr_getmodulename(wtpvoid pFile, wtwchar *szName, wtuint32_t nSize) {
+wtint32_t kr_getModuleName(wtpvoid pFile, wtwchar *szName, wtuint32_t nSize) {
 
         wtint32_t nRet = 0;
         wtwchar   szBufferNtName[_MAX_PATH * 2];
@@ -62,10 +62,10 @@ wtint32_t kr_getmodulename(wtpvoid pFile, wtwchar *szName, wtuint32_t nSize) {
         }
 
         // get full path
-        return kr_getmodulename_sub(szBufferNtName, szName, nSize);
+        return kr_getModuleNameSub(szBufferNtName, szName, nSize);
 }
 
-wtint32_t kr_analyzefile(wtpvoid pFile, krModuleInfo *pModule) {
+wtint32_t kr_analyzeFile(wtpvoid pFile, krModuleInfo *pModule) {
         
         PIMAGE_DOS_HEADER     pDosHeader;
         PIMAGE_NT_HEADERS     pNtHeaders;
@@ -101,7 +101,7 @@ wtint32_t kr_analyzefile(wtpvoid pFile, krModuleInfo *pModule) {
         return 0;
 }
 
-wtint32_t kr_analyzemodule(HANDLE hFile, wtuint_t nBase) {
+wtint32_t kr_analyzeModule(HANDLE hFile, wtuint_t nBase) {
         
         HANDLE    hMap  = NULL;
         wtpvoid   pFile = NULL;
@@ -132,13 +132,13 @@ wtint32_t kr_analyzemodule(HANDLE hFile, wtuint_t nBase) {
         }
 
         // get file name
-        nRet = kr_getmodulename(pFile, szName, _MAX_PATH);
+        nRet = kr_getModuleName(pFile, szName, _MAX_PATH);
         if (nRet != 0) {
                 goto l_ret;
         }
 
         // insert module to data
-        pModule = kr_insertmoduleinfo(szName, nBase);
+        pModule = kr_insertModuleInfo(szName, nBase);
         if (pModule == NULL) {
                 goto l_ret;
         }
@@ -147,7 +147,7 @@ wtint32_t kr_analyzemodule(HANDLE hFile, wtuint_t nBase) {
         if (nRet != 0) {
                 goto l_ret;
         }
-        kr_analyzefile(pFile, pModule);
+        kr_analyzeFile(pFile, pModule);
         
 l_ret:
         if (pFile != NULL) {
@@ -160,7 +160,7 @@ l_ret:
         CloseHandle(hFile);
 
         if (nRet != 0) {
-                kr_jmpwitherror(nRet);
+                kr_jmpWithError(nRet);
         }
         return nRet;
 }

@@ -68,7 +68,7 @@ wtint32_t kr_exec(krExecInfo *pInfo) {
         }
 
         // set debug info
-        if (nRet = kr_initdebuginfo(pInfo->m_exepath, processInfo)) {
+        if (nRet = kr_initDebugInfo(pInfo->m_exepath, processInfo)) {
                 goto l_ret;
         }
 

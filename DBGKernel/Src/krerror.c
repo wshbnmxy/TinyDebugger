@@ -8,6 +8,6 @@ wtint32_t kr_errif() {
         return kr_errno;
 }
 
-wtvoid kr_jmpwitherror(wtint32_t wterrno) {
+wtvoid kr_jmpWithError(wtint32_t wterrno) {
         longjmp(kr_jmppoint, wterrno);
 }

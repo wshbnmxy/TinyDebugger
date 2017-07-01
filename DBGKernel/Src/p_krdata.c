@@ -4,10 +4,10 @@
 #include <string.h>
 #include <Windows.h>
 
-krDbgInfo  krDbgInfoG;
-krDbgInfo *pKrDbgInfoG = &krDbgInfoG;
+static krDbgInfo  krDbgInfoG;
+static krDbgInfo *pKrDbgInfoG = &krDbgInfoG;
 
-wtint32_t kr_initdebuginfo(wtwchar *exepath, PROCESS_INFORMATION info) {
+wtint32_t kr_initDebugInfo(wtwchar *exepath, PROCESS_INFORMATION info) {
 
         kr_errno = 0;
         ZeroMemory(pKrDbgInfoG, sizeof(krDbgInfo));
@@ -19,7 +19,7 @@ wtint32_t kr_initdebuginfo(wtwchar *exepath, PROCESS_INFORMATION info) {
         }
 
         // malloc
-        pKrDbgInfoG->m_exePath  = malloc(sizeof(wtwchar) * wcslen(exepath));
+        pKrDbgInfoG->m_exePath  = malloc(sizeof(wtwchar) * (wcslen(exepath) + 1));
         pKrDbgInfoG->m_pProcess = malloc(sizeof(krProcessInfo));
         pKrDbgInfoG->m_pThreads = malloc(sizeof(krThreadInfo));
 
@@ -56,7 +56,41 @@ l_ret:
         return kr_errno;
 }
 
-wtpvoid kr_insertmoduleinfo(wtwchar *modulepath, wtuint_t baseRVA) {
+wtint32_t kr_uninitDebugInfo() {
+        
+        if (pKrDbgInfoG->m_exePath != NULL) {
+                free(pKrDbgInfoG->m_exePath);
+                pKrDbgInfoG->m_exePath = NULL;
+        }
+
+        while (pKrDbgInfoG->m_pModules != NULL) {
+                krModuleInfo *pVisitor = pKrDbgInfoG->m_pModules;
+                pKrDbgInfoG->m_pModules = pVisitor->m_next;
+                
+                if (pVisitor->m_modulePath != NULL) {
+                        free(pVisitor->m_modulePath);
+                }
+                free(pVisitor);
+        }
+        pKrDbgInfoG->m_pModules = NULL;
+
+        if (pKrDbgInfoG->m_pProcess != NULL) {
+                free(pKrDbgInfoG->m_pProcess);
+                pKrDbgInfoG->m_pProcess = NULL;
+        }
+
+        while (pKrDbgInfoG->m_pThreads != NULL) {
+                krThreadInfo *pVisitor = pKrDbgInfoG->m_pThreads;
+                pKrDbgInfoG->m_pThreads = pVisitor->m_next;
+
+                free(pVisitor);
+        }
+        pKrDbgInfoG->m_pThreads = NULL;
+
+        return kr_errno;
+}
+
+wtpvoid kr_insertModuleInfo(wtwchar *modulepath, wtuint_t baseRVA) {
 
         kr_errno = 0;
         krModuleInfo *pVisitor;
@@ -77,7 +111,7 @@ wtpvoid kr_insertmoduleinfo(wtwchar *modulepath, wtuint_t baseRVA) {
 
         // copy info
         ZeroMemory(pModuleInfo, sizeof(krModuleInfo));
-        pModuleInfo->m_modulePath = malloc(sizeof(wtwchar) * wcslen(modulepath));
+        pModuleInfo->m_modulePath = malloc(sizeof(wtwchar) * (wcslen(modulepath) + 1));
         if (pModuleInfo->m_modulePath == NULL) {
                 kr_errno = KR_MEMORY_ERROR;
                 goto l_ret;

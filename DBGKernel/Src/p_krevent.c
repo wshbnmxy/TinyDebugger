@@ -15,10 +15,10 @@ wtint32_t kr_event(event_cb handers[]) {
                 dwEventCode = debugEv.dwDebugEventCode;
                 
                 if (dwEventCode == EXCEPTION_DEBUG_EVENT - 1 || dwEventCode >= RIP_EVENT + 1) {
-                        kr_jmpwitherror(kr_errno = KR_EVENT_UNKNOW);
+                        kr_jmpWithError(kr_errno = KR_EVENT_UNKNOW);
                 }
                 if (handers[dwEventCode] == NULL) {
-                        kr_jmpwitherror(kr_errno = KR_EVENT_HANDLER_NOT_SET);
+                        kr_jmpWithError(kr_errno = KR_EVENT_HANDLER_NOT_SET);
                 }
 
                 if( !handers[dwEventCode](&debugEv.u, &dwContStatus)) {
@@ -59,7 +59,7 @@ wtbool kr_createprocess_cb(LPCREATE_PROCESS_DEBUG_INFO pInfo, wtuint32_t *pContS
         // no need to CloseHandle(hFile)
         // because of in function kr_analyzemodule
         // CloseHanlde must be called
-        kr_analyzemodule(pInfo->hFile, pInfo->lpBaseOfImage);
+        kr_analyzeModule(pInfo->hFile, pInfo->lpBaseOfImage);
         *pContStatus = DBG_CONTINUE;
         return wttrue;
 }
@@ -72,7 +72,7 @@ wtbool kr_loaddll_cb(LPLOAD_DLL_DEBUG_INFO pInfo, wtuint32_t *pContStatus) {
         // no need to CloseHandle(hFile)
         // because of in function kr_analyzemodule
         // CloseHanlde must be called
-        kr_analyzemodule(pInfo->hFile, pInfo->lpBaseOfDll);
+        kr_analyzeModule(pInfo->hFile, pInfo->lpBaseOfDll);
         *pContStatus = DBG_CONTINUE;
         return wttrue;
 }

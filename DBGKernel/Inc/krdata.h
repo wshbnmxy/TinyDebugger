@@ -33,6 +33,7 @@ typedef struct _kr_dbginfo_s {
 
 extern krDbgInfo *pKrDbgInfoG;
 
-wtint32_t kr_initdebuginfo(wtwchar *exepath, PROCESS_INFORMATION info);
-wtpvoid   kr_insertmoduleinfo(wtwchar *modulepath, wtuint_t baseRVA);
+wtint32_t kr_initDebugInfo(wtwchar *exepath, PROCESS_INFORMATION info);
+wtint32_t kr_uninitDebugInfo();
+wtpvoid   kr_insertModuleInfo(wtwchar *modulepath, wtuint_t baseRVA);
 #endif // !_KR_DATA_H_

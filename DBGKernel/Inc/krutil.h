@@ -3,6 +3,6 @@
 
 #include <krcommon.h>
 
-wtint32_t kr_analyzemodule(HANDLE hFile, wtuint_t nBase);
+wtint32_t kr_analyzeModule(HANDLE hFile, wtuint_t nBase);
 
 #endif // !_KR_UTIL_H_

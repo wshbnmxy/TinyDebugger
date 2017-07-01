@@ -21,6 +21,6 @@ extern wtint32_t kr_errno;
 
 #define KR_NOT_EXPECT_ERROR      9999
 
-wtvoid kr_jmpwitherror(wtint32_t wterrno);
+wtvoid kr_jmpWithError(wtint32_t wterrno);
 
 #endif // !_KR_ERROR_H_
