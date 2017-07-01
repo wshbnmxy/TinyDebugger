@@ -158,9 +158,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="krsbrk.c" />
     <ClCompile Include="Src\krerror.c" />
     <ClCompile Include="Src\krexec.c" />
+    <ClCompile Include="Src\krsbrk.c" />
     <ClCompile Include="Src\p_krdata.c" />
     <ClCompile Include="Src\p_krevent.c" />
     <ClCompile Include="Src\p_krutil.c" />

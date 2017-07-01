@@ -30,7 +30,7 @@
     <ClCompile Include="Src\p_krutil.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="krsbrk.c">
+    <ClCompile Include="Src\krsbrk.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
