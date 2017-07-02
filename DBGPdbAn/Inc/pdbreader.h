@@ -11,6 +11,12 @@ public:
         PdbReader(wtwchar *szModuleName);
         ~PdbReader();
 
+        wtuint32_t pdb_dumpAll();
+
+private:
+        wtuint32_t pdb_dumpObj(IDiaSymbol *pDiaSymCompiland);
+        wtuint32_t pdb_dumpFun(IDiaSymbol *pDiaSymFunction);
+
 private:
         HRESULT  m_hr;
         IDiaDataSource *m_pDiaDataSource;

@@ -26,6 +26,7 @@ wtint32_t pdb_read(wtwchar *szModuleName) {
 
         try {
                 wt::PdbReader reader(szModuleName);
+                reader.pdb_dumpAll();
         } catch (const wt::PdbError &e) {
                 e.pdb_getError();
         } catch (const std::exception& e) {

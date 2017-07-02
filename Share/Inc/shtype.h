@@ -18,6 +18,9 @@ typedef unsigned __int64 wtuint64_t;
 typedef wtint32_t        wtint_t;
 typedef wtuint32_t       wtuint_t;
 
+typedef long             wtlong;
+typedef unsigned long    wtulong;
+
 typedef float            wtfloat;
 typedef double           wtdouble;
 
