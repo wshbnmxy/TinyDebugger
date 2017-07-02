@@ -13,6 +13,7 @@ Use Visual Studio 2015 to build this project
 * Share&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;->shared include file and lib
 * DBGCmdL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;->handle debug command
 * DBGKernel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;->debug kernel
+* DBGPdbAn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;->pdb dump
 * Other&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;->undetermined
 
 ## Comands
@@ -24,6 +25,7 @@ Use Visual Studio 2015 to build this project
 Now only support x86 PE file
 
 * [x] Create debug process
+* [ ] Dump info from pdb file
 * [ ] Hanlde debug evnet
 * [ ] Set breakpoint
 * [ ] Continue(Resume)
