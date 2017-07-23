@@ -54,5 +54,6 @@ dkms.conf
 # Visual Studio 2015 temp file
 *.VC.db
 *.VC.opendb
+*.vcxproj.user
 Mid/
 .vs/
