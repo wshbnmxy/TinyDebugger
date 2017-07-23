@@ -1,0 +1,4 @@
+LIBRARY WTDBGIF
+
+EXPORTS
+	if_initPDB      @1

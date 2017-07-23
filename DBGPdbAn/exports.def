@@ -1,4 +1,0 @@
-LIBRARY WTDBGPDB
-
-EXPORTS
-	pdb_read      @1

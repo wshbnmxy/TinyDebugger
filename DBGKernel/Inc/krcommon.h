@@ -3,7 +3,7 @@
 
 #include "..\..\Share\Inc\shtype.h"
 #include "..\..\Share\Inc\shkernel.h"
-#include "..\..\Share\Inc\shpdban.h"
+#include "..\..\Share\Inc\shdbgif.h"
 
 #include <Windows.h>
 

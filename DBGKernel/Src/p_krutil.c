@@ -148,7 +148,7 @@ wtint32_t kr_analyzeModule(HANDLE hFile, wtpvoid nBase) {
                 goto l_ret;
         }
         kr_analyzeFile(pFile, pModule);
-        pdb_read(szName);
+        if_initPDB(szName);
         
 l_ret:
         if (pFile != NULL) {

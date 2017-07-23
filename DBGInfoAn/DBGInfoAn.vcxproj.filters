@@ -15,30 +15,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Inc\pdbcommon.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\pdbread.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\pdbreader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\pdberror.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="exports.def">
       <Filter>Resources</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\pdbread.cpp">
+    <ClCompile Include="Src\ifinit.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Src\p_pdbreader.cpp">
+    <ClCompile Include="Src\p_ifinfo.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Src\ifdllmain.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\p_ifpdbreader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Inc\ifcommon.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\ifpdbreader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\iferror.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\ifinfo.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

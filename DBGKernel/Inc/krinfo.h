@@ -22,6 +22,7 @@ typedef struct _kr_moduleinfo_s {
                 wtpvoid m_startVA;        // start va
                 wtpvoid m_endVA;          // end va
         }        m_imageInfo;
+        wtpvoid  m_pdbInfo;
         struct _kr_moduleinfo_s *m_next;  // link list next ptr
 }krModuleInfo;
 

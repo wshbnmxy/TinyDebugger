@@ -18,24 +18,10 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Src\pdbread.cpp" />
-    <ClCompile Include="Src\p_pdbreader.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Inc\pdbcallback.h" />
-    <ClInclude Include="Inc\pdbcommon.h" />
-    <ClInclude Include="Inc\pdberror.h" />
-    <ClInclude Include="Inc\pdbread.h" />
-    <ClInclude Include="Inc\pdbreader.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="exports.def" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F97F29DE-E651-4804-B221-E30B41BD75FD}</ProjectGuid>
+    <ProjectGuid>{955B30BC-A697-4062-9864-76B5E16BBB02}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>DBGPdbAn</RootNamespace>
+    <RootNamespace>DBGInfoAn</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -85,20 +71,20 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>WTDBGPDB</TargetName>
     <OutDir>$(SolutionDir)Binary\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Mid\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>.\Inc;.\Inc\dia;$(IncludePath)</IncludePath>
+    <TargetName>WTDBGIF</TargetName>
+    <IncludePath>.\Inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>WTDBGPDB</TargetName>
     <OutDir>$(SolutionDir)Binary\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>Mid\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>.\Inc;.\Inc\dia;$(IncludePath)</IncludePath>
+    <TargetName>WTDBGIF</TargetName>
+    <IncludePath>.\Inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -109,7 +95,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_CPLUSPLUS;_DEBUG;_WINDOWS;_USRDLL;DBGPDBAN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;DBGINFOAN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -124,7 +110,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;DBGPDBAN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;DBGINFOAN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -141,7 +127,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_CPLUSPLUS;NDEBUG;_WINDOWS;_USRDLL;DBGPDBAN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;DBGINFOAN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -160,7 +146,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;DBGPDBAN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;DBGINFOAN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -171,6 +157,24 @@
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\ifdllmain.cpp" />
+    <ClCompile Include="Src\ifinit.cpp">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">WIN32;_CPLUSPLUS;_DEBUG;_WINDOWS;_USRDLL;DBGINFOAN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">WIN32;_CPLUSPLUS;NDEBUG;_WINDOWS;_USRDLL;DBGINFOAN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="Src\p_ifinfo.cpp" />
+    <ClCompile Include="Src\p_ifpdbreader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Inc\ifcommon.h" />
+    <ClInclude Include="Inc\iferror.h" />
+    <ClInclude Include="Inc\ifinfo.h" />
+    <ClInclude Include="Inc\ifpdbreader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="exports.def" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,9 +1,9 @@
 // This is a simple copy from MS dia Sample
 
-#ifndef _PDB_CALLBACK_H_
-#define _PDB_CALLBACK_H_
+#ifndef _IF_PDBCALLBACK_H_
+#define _IF_PDBCALLBACK_H_
 
-#include "dia2.h"
+#include "dia/dia2.h"
 
 #pragma warning ( disable : 4100)
 
@@ -96,4 +96,4 @@ public:
 }
 #pragma warning ( default : 4100 )
 
-#endif // !_PDB_CALLBACK_H_
+#endif // !_IF_PDBCALLBACK_H_

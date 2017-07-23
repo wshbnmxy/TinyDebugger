@@ -13,7 +13,7 @@ Use Visual Studio 2015 to build this project
 * Share&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;->shared include file and lib
 * DBGCmdL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;->handle debug command
 * DBGKernel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;->debug kernel
-* DBGPdbAn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;->pdb dump
+* DBGInfoAn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;->dump/get debug info(only suppoer pdb now, coff/darwin may support)
 * Other&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;->undetermined
 
 ## Comands
