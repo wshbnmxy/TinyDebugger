@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\krexec.c">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Src\krerror.c">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -27,13 +24,16 @@
     <ClCompile Include="Src\p_krutil.c">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Src\krsbrk.c">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Src\krdllmain.c">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Src\p_krinfo.c">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\krbrkp.c">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\krctrl.c">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>

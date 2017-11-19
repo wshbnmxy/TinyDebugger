@@ -92,7 +92,7 @@ wtint32_t kr_exitthread_cb(LPEXIT_THREAD_DEBUG_INFO pInfo, wtuint32_t *pContStat
         KR_MK_DEBUG_EVENT(EXIT_THREAD_DEBUG_EVENT);
         *pContStatus = DBG_CONTINUE;
         
-        kr_delModuleInfo(pInfo->dwExitCode);
+        kr_delThreadInfo(pInfo->dwExitCode);
         return KR_EVENT_CONTINUE;
 }
 

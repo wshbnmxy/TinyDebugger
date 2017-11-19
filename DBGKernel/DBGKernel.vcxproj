@@ -164,8 +164,8 @@
   <ItemGroup>
     <ClCompile Include="Src\krdllmain.c" />
     <ClCompile Include="Src\krerror.c" />
-    <ClCompile Include="Src\krexec.c" />
-    <ClCompile Include="Src\krsbrk.c" />
+    <ClCompile Include="Src\krctrl.c" />
+    <ClCompile Include="Src\krbrkp.c" />
     <ClCompile Include="Src\p_krinfo.c" />
     <ClCompile Include="Src\p_krevent.c" />
     <ClCompile Include="Src\p_krutil.c" />

@@ -299,7 +299,7 @@ wtint32_t kr_addThreadInfo(HANDLE hThread)
 wtint32_t kr_delThreadInfo(DWORD dwExitCode)
 {
         krThreadInfo *pVisitor;
-        krModuleInfo *pLast;
+        krThreadInfo *pLast;
         DWORD         dwCode;
         
         pVisitor = pKrDbgInfoG->m_pThreads;
