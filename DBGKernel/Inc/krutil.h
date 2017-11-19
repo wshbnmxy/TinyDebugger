@@ -3,6 +3,8 @@
 
 #include <krcommon.h>
 
-wtint32_t kr_analyzeModule(HANDLE hFile, wtpvoid nBase);
+wtpvoid_t kr_wstrdup(const wtwchar_t *src);
+wtpvoid_t kr_malloc(const wtuint32_t len);
+wtvoid_t  kr_free(wtpvoid_t *mem);
 
 #endif // !_KR_UTIL_H_

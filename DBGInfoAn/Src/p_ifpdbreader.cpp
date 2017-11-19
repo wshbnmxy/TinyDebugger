@@ -2,7 +2,7 @@
 
 namespace wt {
 
-PdbReader::PdbReader(wtwchar* szModuleName, DbgInfo *pDbgInfo) :
+PdbReader::PdbReader(wtwchar_t* szModuleName, DbgInfo *pDbgInfo) :
         m_pDiaDataSource(NULL), m_pDiaSession(NULL), m_pDiaGSymbol(NULL),
         m_pDbgInfo(pDbgInfo) {
         CoInitialize(NULL);
@@ -64,7 +64,7 @@ wtuint32_t PdbReader::if_pdbDumpAll() {
         }
         
         IDiaSymbol *pDiaSymCompiland;
-        wtulong  celt;
+        wtulong_t   celt;
 
         while (SUCCEEDED(pDiaEnumSymbols->Next(1, &pDiaSymCompiland, &celt)) && celt == 1) {
                 if_pdbDumpCompiland(pDiaSymCompiland);
@@ -84,7 +84,7 @@ wtuint32_t PdbReader::if_pdbDumpCompiland(IDiaSymbol * &pDiaSymCompiland) {
         // TODO: Use AutoPtr To Make EnumSourceFiles Release
         IDiaEnumSourceFiles *pDiaSourceFiles;
         IDiaSourceFile      *pDiaSource;
-        wtulong              celt;
+        wtulong_t            celt;
 
         m_hr = m_pDiaSession->findFile(pDiaSymCompiland, NULL, nsNone, &pDiaSourceFiles);
         if (FAILED(m_hr)) {
@@ -118,7 +118,7 @@ wtuint32_t PdbReader::if_pdbDumpCompiland(IDiaSymbol * &pDiaSymCompiland) {
 
 wtuint32_t PdbReader::if_pdbDumpSourceFile(IDiaSourceFile *&pDiaSourceFile) {
 
-        wtwchar *szFileName;
+        wtwchar_t *szFileName;
         if (pDiaSourceFile->get_fileName(&szFileName) != S_OK || szFileName == NULL) {
                 pDiaSourceFile->Release();
                 throw wt::IfDiaComError();
@@ -132,9 +132,9 @@ wtuint32_t PdbReader::if_pdbDumpSourceFile(IDiaSourceFile *&pDiaSourceFile) {
 
 wtuint32_t PdbReader::if_pdbDumpFunc(IDiaSymbol * &pDiaSymFunction) {
 
-        wtwchar *szFuncName;
-        wtwchar *szFuncRealName;
-        wtbool   bNoNeedFree = wtfalse;
+        wtwchar_t *szFuncName;
+        wtwchar_t *szFuncRealName;
+        wtbool_t   bNoNeedFree = wtfalse;
         DbgFuncInfo *pFuncInfo;
 
         if (pDiaSymFunction->get_name(&szFuncName) != S_OK) {
@@ -152,7 +152,7 @@ wtuint32_t PdbReader::if_pdbDumpFunc(IDiaSymbol * &pDiaSymFunction) {
         if (!bNoNeedFree) { SysFreeString(szFuncRealName); }
 
         wtuint64_t funcLen;
-        wtulong    funcRVA;
+        wtulong_t  funcRVA;
 
         IDiaEnumLineNumbers *pDiaEnumLines;
 
@@ -163,7 +163,7 @@ wtuint32_t PdbReader::if_pdbDumpFunc(IDiaSymbol * &pDiaSymFunction) {
         if (pDiaSymFunction->get_relativeVirtualAddress(&funcRVA) != S_OK) {
                 throw wt::IfDiaComError();
         }
-        m_hr = m_pDiaSession->findLinesByRVA(funcRVA, static_cast<wtulong>(funcLen), &pDiaEnumLines);
+        m_hr = m_pDiaSession->findLinesByRVA(funcRVA, static_cast<wtulong_t>(funcLen), &pDiaEnumLines);
         if (FAILED(m_hr)) {
                 throw wt::IfDiaComError();
         }
@@ -174,13 +174,13 @@ wtuint32_t PdbReader::if_pdbDumpFunc(IDiaSymbol * &pDiaSymFunction) {
 
 wtuint32_t PdbReader::if_pdbDumpLines(IDiaEnumLineNumbers *&pDiaEnumLines, DbgFuncInfo *pFuncInfo) {
         IDiaLineNumber      *pDiaLine;
-        wtulong              celt;
+        wtulong_t            celt;
 
-        wtulong              lineRVA;
-        wtulong              lineLength;
-        wtulong              lineNo;
-        wtulong              lineSrcId;
-        wtulong              lineLastSrcId = -1;
+        wtulong_t            lineRVA;
+        wtulong_t            lineLength;
+        wtulong_t            lineNo;
+        wtulong_t            lineSrcId;
+        wtulong_t            lineLastSrcId = -1;
         DbgFileInfo         *pFileInfo = NULL;    
 
         while (SUCCEEDED(pDiaEnumLines->Next(1, &pDiaLine, &celt)) && (celt == 1)) {
@@ -197,7 +197,7 @@ wtuint32_t PdbReader::if_pdbDumpLines(IDiaEnumLineNumbers *&pDiaEnumLines, DbgFu
 
                 if (lineSrcId != lineLastSrcId) {
                         IDiaSourceFile *pDiaSource;
-                        wtwchar        *szFileName;
+                        wtwchar_t      *szFileName;
                         if (pDiaLine->get_sourceFile(&pDiaSource) != S_OK) {
                                 pDiaLine->Release();
                                 pDiaEnumLines->Release();
@@ -222,17 +222,17 @@ wtuint32_t PdbReader::if_pdbDumpLines(IDiaEnumLineNumbers *&pDiaEnumLines, DbgFu
                         throw wt::IfError();
                 }
 
-                m_pDbgInfo->insertLineToList(lineNo, (wtpvoid)lineRVA, lineLength, pFileInfo, pFuncInfo);
+                m_pDbgInfo->insertLineToList(lineNo, (wtpvoid_t)lineRVA, lineLength, pFileInfo, pFuncInfo);
                 pDiaLine->Release();
         }
         return 0;
 }
 
-wtbool PdbReader::if_pdbIsCompilandIsSource(IDiaSymbol *&pDiaSymCompiland) {
+wtbool_t PdbReader::if_pdbIsCompilandIsSource(IDiaSymbol *&pDiaSymCompiland) {
 
         IDiaEnumSymbols *pDiaEnumSymbols;
         IDiaSymbol      *pDiaSymbol;
-        wtulong          celt;
+        wtulong_t        celt;
 
         m_hr = pDiaSymCompiland->findChildren(SymTagCompilandDetails, NULL, nsNone, &pDiaEnumSymbols);
         if (FAILED(m_hr)) {
@@ -241,7 +241,7 @@ wtbool PdbReader::if_pdbIsCompilandIsSource(IDiaSymbol *&pDiaSymCompiland) {
         }
 
         while (SUCCEEDED(pDiaEnumSymbols->Next(1, &pDiaSymbol, &celt)) && celt == 1) {
-                wtulong  language;
+                wtulong_t language;
                 pDiaSymbol->get_language(&language);
                 pDiaSymbol->Release();
                 if (language == CV_CFL_LINK || language == CV_CFL_CVTRES || language == CV_CFL_CVTPGD) {

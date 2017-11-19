@@ -15,7 +15,6 @@ BOOL WINAPI DllMain(HANDLE hModule, DWORD dwReason, LPVOID lpReserved) {
         case DLL_PROCESS_ATTACH:
                 break;
         case DLL_PROCESS_DETACH:
-                kr_uninitDebugInfo();
 #ifdef _DEBUG
                 _CrtDumpMemoryLeaks();
 #endif // _DEBUG

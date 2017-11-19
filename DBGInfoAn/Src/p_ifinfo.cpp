@@ -8,7 +8,7 @@ std::map<std::wstring, DbgInfo *>  dbgInfoMapG;    // A map about moduleName and
 
 namespace wt {
 
-DbgLineInfo::DbgLineInfo(wtuint32_t lineNo, wtpvoid lineRVA, wtuint32_t lineLen, DbgFileInfo *pFileInfo, DbgFuncInfo *pFuncInfo) :
+DbgLineInfo::DbgLineInfo(wtuint32_t lineNo, wtpvoid_t lineRVA, wtuint32_t lineLen, DbgFileInfo *pFileInfo, DbgFuncInfo *pFuncInfo) :
         m_lineNo(lineNo), m_lineRVA(lineRVA), m_lineLength(lineLen), m_fileInfo(pFileInfo), m_funcInfo(pFuncInfo) {
         if (m_funcInfo->m_FileInfo == NULL) {
                 m_funcInfo->m_FileInfo = m_fileInfo;
@@ -64,7 +64,7 @@ DbgFuncInfo * DbgInfo::insertFunctionToList(std::wstring functionName, std::wstr
         return *m_FuncList.insert(iter, new DbgFuncInfo(functionName, functionRealName));
 }
 
-void DbgInfo::insertLineToList(wtuint32_t lineNo, wtpvoid lineRVA, wtuint32_t lineLen, DbgFileInfo *pFileInfo, DbgFuncInfo *pFuncInfo) {
+void DbgInfo::insertLineToList(wtuint32_t lineNo, wtpvoid_t lineRVA, wtuint32_t lineLen, DbgFileInfo *pFileInfo, DbgFuncInfo *pFuncInfo) {
         auto iter = m_LineList.begin();
         for (; iter != m_LineList.end(); iter++) {
                 if (lineRVA == (*iter)->m_lineRVA) {

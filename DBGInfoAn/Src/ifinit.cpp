@@ -4,7 +4,7 @@
 
 wt::DbgInfo *getDbgInfo(std::wstring ModuleName);
 
-wtuint32_t if_initPDB(wtwchar *szModuleName) {
+wtuint32_t if_initPDB(wtwchar_t *szModuleName) {
 
         wt::PdbReader reader(szModuleName, getDbgInfo(szModuleName));
         return 0;

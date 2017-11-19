@@ -2,34 +2,27 @@
 #include <krerror.h>
 #include <krevent.h>
 #include <krinfo.h>
+#include <krutil.h>
 
 #include <string.h>
 #include <stdlib.h>
 #include <Windows.h>
 
-extern event_cb  cbExecEvent[];
+extern event_cb  contEvtCbs[];
 extern jmp_buf   kr_jmppoint;
 
-wtint32_t kr_exec(krExecInfo *pInfo) {
-
-        wtint32_t     nRet    = 0;
+wtint32_t kr_exec(krExecInfo *pInfo)
+{
+        wtint32_t     nRet    = wtfailure;
         wtuint32_t    nCmd    = 0;
-        wtwchar      *szCmdL  = NULL;
+        wtwchar_t    *szCmdL  = NULL;
 
         STARTUPINFOW        startupInfo;
         PROCESS_INFORMATION processInfo;
 
-        kr_errno = 0;
-
         // param check
         if (pInfo == NULL || pInfo->m_exepath == NULL) {
-                return nRet = kr_errno = WT_PARAM_ERROR;
-        }
-
-        // set error jmp point
-        nRet = setjmp(kr_jmppoint);
-        if (nRet != 0) {
-                goto l_ret;
+                return nRet;
         }
 
         // create command
@@ -37,9 +30,9 @@ wtint32_t kr_exec(krExecInfo *pInfo) {
         if (pInfo->m_exeargs != NULL && wcslen(pInfo->m_exeargs)) {
                 nCmd += (1 + wcslen(pInfo->m_exeargs));
         }
-        szCmdL = malloc(sizeof(wtwchar) * nCmd);
+        szCmdL = malloc(sizeof(wtwchar_t) * nCmd);
         if (szCmdL == NULL) {
-                return nRet = kr_errno = WT_MEMORY_ERROR;
+                return nRet;
         }
         if (pInfo->m_exeargs != NULL && wcslen(pInfo->m_exeargs)) {
                 _swprintf(szCmdL, L"\"%s\" %s", pInfo->m_exepath, pInfo->m_exeargs);
@@ -54,27 +47,15 @@ wtint32_t kr_exec(krExecInfo *pInfo) {
         if (!CreateProcessW(NULL, szCmdL, NULL, NULL, TRUE,
                 CREATE_DEFAULT_ERROR_MODE | CREATE_NEW_PROCESS_GROUP | CREATE_UNICODE_ENVIRONMENT | DEBUG_ONLY_THIS_PROCESS,
                 pInfo->m_execenv, pInfo->m_execwf, &startupInfo, &processInfo)) {
-                kr_errno = GetLastError();
-                switch (kr_errno)
-                {
-                case ERROR_FILE_NOT_FOUND:
-                        nRet = kr_errno = WT_EXEFILE_NOT_FOUND;break;
-                case ERROR_DIRECTORY:
-                        nRet = kr_errno = WT_EXEWF_NOT_FOUND;break;
-                default:
-                        nRet = WT_NOT_EXPECT_ERROR;break;
-                }
                 goto l_ret;
         }
 
-        // set debug info
-        if (nRet = kr_initDebugInfo(pInfo->m_exepath, processInfo)) {
-                goto l_ret;
-        }
+        CloseHandle(processInfo.hProcess);
+        CloseHandle(processInfo.hThread);
 
-        kr_event(cbExecEvent);
+        nRet = kr_event(contEvtCbs);
 
 l_ret:
-        if (szCmdL != NULL)     free(szCmdL);
+        kr_free(&szCmdL);
         return nRet;
 }

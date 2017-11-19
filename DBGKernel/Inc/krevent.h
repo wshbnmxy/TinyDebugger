@@ -6,7 +6,7 @@
 
 #include <Windows.h>
 
-typedef   wtbool (*event_cb)(wtvoid *, wtuint32_t *);
+typedef   wtint32_t (*event_cb)(wtvoid_t *, wtuint32_t *);
 wtint32_t kr_event(event_cb handers[]);
 
 

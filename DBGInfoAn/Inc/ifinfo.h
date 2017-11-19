@@ -29,11 +29,11 @@ struct DbgFuncInfo {
 
 struct DbgLineInfo {
         wtuint32_t      m_lineNo;
-        wtpvoid         m_lineRVA;
+        wtpvoid_t       m_lineRVA;
         wtuint32_t      m_lineLength;
         DbgFileInfo    *m_fileInfo;
         DbgFuncInfo    *m_funcInfo;
-        DbgLineInfo(wtuint32_t lineNo, wtpvoid lineRVA, wtuint32_t lineLen, DbgFileInfo *pFileInfo, DbgFuncInfo *pFuncInfo);
+        DbgLineInfo(wtuint32_t lineNo, wtpvoid_t lineRVA, wtuint32_t lineLen, DbgFileInfo *pFileInfo, DbgFuncInfo *pFuncInfo);
 };
 
 class DbgInfo {
@@ -52,7 +52,7 @@ public:
 private:
         void insertSourceFileToList(std::wstring sourceName);
         DbgFuncInfo* insertFunctionToList(std::wstring functionName, std::wstring functionRealName);
-        void insertLineToList(wtuint32_t lineNo, wtpvoid lineRVA, wtuint32_t lineLen, DbgFileInfo *pFileInfo, DbgFuncInfo *pFuncInfo);
+        void insertLineToList(wtuint32_t lineNo, wtpvoid_t lineRVA, wtuint32_t lineLen, DbgFileInfo *pFileInfo, DbgFuncInfo *pFuncInfo);
 };
 
 }

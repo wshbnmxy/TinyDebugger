@@ -2,8 +2,8 @@
 
 #include <memory.h>
 
-wtint_t wmain(wtint_t argc, wtwchar *argv[]) {
-
+wtint_t wmain(wtint_t argc, wtwchar_t *argv[])
+{
         wtint32_t  ret;
         {
         krExecInfo execInfo;

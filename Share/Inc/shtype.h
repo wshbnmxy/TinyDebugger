@@ -18,21 +18,24 @@ typedef unsigned __int64 wtuint64_t;
 typedef wtint32_t        wtint_t;
 typedef wtuint32_t       wtuint_t;
 
-typedef long             wtlong;
-typedef unsigned long    wtulong;
+typedef long             wtlong_t;
+typedef unsigned long    wtulong_t;
 
-typedef float            wtfloat;
-typedef double           wtdouble;
+typedef float            wtfloat_t;
+typedef double           wtdouble_t;
 
-typedef char             wtchar;
-typedef wchar_t          wtwchar;
-typedef wtint8_t         wtbool;
+typedef char             wtchar_t;
+typedef wchar_t          wtwchar_t;
+typedef wtint8_t         wtbool_t;
 
-typedef void             wtvoid;
-typedef wtvoid *         wtpvoid;
+typedef void             wtvoid_t;
+typedef wtvoid_t *       wtpvoid_t;
 
-#define wttrue           (wtbool)1
-#define wtfalse          (wtbool)0
+#define wttrue           (wtbool_t)1
+#define wtfalse          (wtbool_t)0
+
+#define wtsuccess        (wtint8_t)0
+#define wtfailure        (wtint8_t)1
 
 
 #endif // !_SH_TYPE_H_

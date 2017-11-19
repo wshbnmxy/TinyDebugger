@@ -15,7 +15,7 @@ namespace wt {
 class PdbReader
 {
 public:
-        PdbReader(wtwchar *szModuleName, DbgInfo *pDbgInfo);
+        PdbReader(wtwchar_t *szModuleName, DbgInfo *pDbgInfo);
         ~PdbReader();
 
 private:
@@ -35,7 +35,7 @@ private:
         wtuint32_t if_pdbDumpLines(IDiaEnumLineNumbers *&pDiaEnumLines, DbgFuncInfo *pFuncInfo);
 
 private:
-        wtbool     if_pdbIsCompilandIsSource(IDiaSymbol * &pDiaSymCompiland);
+        wtbool_t   if_pdbIsCompilandIsSource(IDiaSymbol * &pDiaSymCompiland);
 };
 }
 

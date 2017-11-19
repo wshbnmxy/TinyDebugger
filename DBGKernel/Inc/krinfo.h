@@ -17,17 +17,16 @@ typedef struct _kr_threadinfo_s {
 }krThreadInfo;
 
 typedef struct _kr_moduleinfo_s {
-        wtwchar *m_modulePath;            // module name full path
+        wtwchar_t *m_modulePath;          // module name full path
         struct {
-                wtpvoid m_startVA;        // start va
-                wtpvoid m_endVA;          // end va
+                wtpvoid_t m_startVA;      // start va
+                wtpvoid_t m_endVA;        // end va
         }        m_imageInfo;
-        wtpvoid  m_pdbInfo;
+        wtpvoid_t  m_pdbInfo;
         struct _kr_moduleinfo_s *m_next;  // link list next ptr
 }krModuleInfo;
 
 typedef struct _kr_dbginfo_s {
-        wtwchar        *m_exePath;        // exe file name full path
         krProcessInfo  *m_pProcess;
         krThreadInfo   *m_pThreads;
         krModuleInfo   *m_pModules;
@@ -35,7 +34,12 @@ typedef struct _kr_dbginfo_s {
 
 extern krDbgInfo *pKrDbgInfoG;
 
-wtint32_t kr_initDebugInfo(wtwchar *exepath, PROCESS_INFORMATION info);
-wtint32_t kr_uninitDebugInfo();
-wtpvoid   kr_insertModuleInfo(wtwchar *modulepath, wtpvoid baseVA);
+wtint32_t kr_addModuleInfo(HANDLE hFile, const wtpvoid_t baseVA);
+wtint32_t kr_delModuleInfo(const wtpvoid_t baseVA);
+
+wtint32_t kr_addThreadInfo(HANDLE hThread);
+wtint32_t kr_delThreadInfo(DWORD dwExitCode);
+
+wtint32_t kr_initInfo(LPCREATE_PROCESS_DEBUG_INFO pCreateInfo);
+wtint32_t kr_uninitInfo();
 #endif // !_KR_INFO_H_

@@ -7,7 +7,7 @@
 extern "C" {
 #endif // _CPLUSPLUS
 
-wtuint32_t if_initPDB(wtwchar *szModuleName);
+wtuint32_t if_initPDB(wtwchar_t *szModuleName);
 
 #ifdef _CPLUSPLUS
 }
