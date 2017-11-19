@@ -45,50 +45,58 @@ wtvoid_t kr_free(wtpvoid_t *mem)
         }
 }
 
-wtint32_t kr_getModuleNameSub(wtwchar_t *szNtName, wtwchar_t *szName, wtuint32_t nSize)
+wtint32_t kr_readMemory(HANDLE hProcess, const wtpvoid_t nBase, const wtuint32_t nSize, wtpvoid_t pOut)
 {
-        wtwchar_t  szBuffer[_MAX_PATH] = L" :";
-        wtwchar_t  szNtBuffer[_MAX_PATH] = L"";
-        wtuint32_t nNtBufferLen;
-        wtuint32_t nError = 0;
+        wtuint32_t nReadSize = 0;
 
-        for (szBuffer[0] = L'A'; szBuffer[0] <= L'Z'; szBuffer[0]++) {
-                if (QueryDosDeviceW(szBuffer, szNtBuffer, _MAX_PATH) > 0) {
-
-                        nNtBufferLen = wcslen(szNtBuffer);
-                        if (wcsncmp(szNtBuffer, szNtName, nNtBufferLen) == 0 && szNtName[nNtBufferLen] == L'\\') {
-                                _snwprintf(szName, nSize, L"%s%s", szBuffer, &szNtName[nNtBufferLen]);
-                                return wtsuccess;
-                        }
-                        
-                } else {
-                        nError = GetLastError();
-                        if (nError == ERROR_FILE_NOT_FOUND) {
-                                continue;
-                        }
-                        return wtfailure;
-                }
+        if (hProcess == INVALID_HANDLE_VALUE || nBase == NULL || nSize == 0 || pOut == NULL) {
+                return wtfailure;
         }
-        return wtfailure;
+
+        if (!ReadProcessMemory(hProcess, nBase, pOut, nSize, &nReadSize)) {
+                return wtfailure;
+        }
+
+        return nSize == nReadSize ? wtsuccess : wtfailure;
 }
 
-wtint32_t kr_getModuleName(wtpvoid_t pFile, wtwchar_t *szName, wtuint32_t nSize) {
+wtint32_t kr_writeMemory(HANDLE hProcess, const wtpvoid_t nBase, const wtuint32_t nSize, const wtpvoid_t pIn)
+{
+        wtuint32_t nWriteSize = 0;
 
-        wtint32_t nRet = 0;
-        wtwchar_t szBufferNtName[_MAX_PATH * 2];
-
-        // param check
-        if (pFile == NULL || szName == NULL || nSize == 0) {
+        if (hProcess == INVALID_HANDLE_VALUE || nBase == NULL || nSize == 0 || pIn == NULL) {
                 return wtfailure;
         }
 
-        ZeroMemory(szName, sizeof(wtwchar_t) * nSize);
-        
-        // get mapped file name
-        if (!GetMappedFileNameW(GetCurrentProcess(), pFile, szBufferNtName, _MAX_PATH * 2)) {
+        if (!WriteProcessMemory(hProcess, nBase, pIn, nSize, &nWriteSize)) {
                 return wtfailure;
         }
 
-        // get full path
-        return kr_getModuleNameSub(szBufferNtName, szName, nSize);
+        return nSize == nWriteSize ? wtsuccess : wtfailure;
+}
+
+wtint32_t kr_readRegisters(HANDLE hThread, LPCONTEXT pRegisters)
+{
+        if (hThread == INVALID_HANDLE_VALUE || pRegisters == NULL) {
+                return wtfailure;
+        }
+
+        if (!GetThreadContext(hThread, pRegisters)) {
+                return wtfailure;
+        }
+
+        return wtsuccess;
+}
+
+wtint32_t kr_writeRegisters(HANDLE hThread, const LPCONTEXT pRegisters)
+{
+        if (hThread == INVALID_HANDLE_VALUE || pRegisters == NULL) {
+                return wtfailure;
+        }
+
+        if (!SetThreadContext(hThread, pRegisters)) {
+                return wtfailure;
+        }
+
+        return wtsuccess;
 }
